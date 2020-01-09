@@ -1,5 +1,8 @@
 # docker-cordova-android
 
+[![Build Status](https://travis-ci.com/alvisisme/docker-cordova-android.svg?branch=master)](https://travis-ci.com/alvisisme/docker-cordova-android)
+![https://cloud.docker.com/repository/docker/alvisisme/cordova-android](https://img.shields.io/docker/pulls/alvisisme/cordova-android.svg)
+
 Cordova Android 构建镜像
 
 ## 依赖版本
