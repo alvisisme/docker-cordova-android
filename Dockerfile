@@ -15,7 +15,7 @@ RUN apt-get -q -y update \
 
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
 
-ARG GRADLE_VERSION
+ARG GRADLE_VERSION=4.10.3
 ENV GRADLE_HOME /gradle-${GRADLE_VERSION}
 RUN wget -q https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip \
     && unzip -q gradle-${GRADLE_VERSION}-bin.zip \
@@ -24,8 +24,8 @@ ENV PATH ${GRADLE_HOME}/bin:$PATH
 
 ENV ANDROID_HOME /android-sdk-linux
 ENV ANDROID_SDK_VERSION 4333796
-ARG ANDROID_COMPILE_SDK
-ARG ANDROID_BUILD_TOOLS
+ARG ANDROID_COMPILE_SDK=28
+ARG ANDROID_BUILD_TOOLS=28.0.3
 
 RUN wget -q -O /tmp/android-sdk.zip https://dl.google.com/android/repository/sdk-tools-linux-${ANDROID_SDK_VERSION}.zip && \
     unzip -q -d android-sdk-linux /tmp/android-sdk.zip && \
