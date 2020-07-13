@@ -32,7 +32,8 @@ RUN wget -q https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-b
     && rm gradle-${GRADLE_VERSION}-bin.zip
 ENV PATH ${GRADLE_HOME}/bin:$PATH
 
-ENV ANDROID_HOME /android-sdk-linux
+ENV ANDROID_SDK_ROOT /android-sdk-linux
+ENV ANDROID_HOME $ANDROID_SDK_ROOT
 ENV ANDROID_SDK_VERSION 4333796
 ARG ANDROID_COMPILE_SDK=28
 ARG ANDROID_BUILD_TOOLS=28.0.3
