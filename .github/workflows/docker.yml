@@ -23,7 +23,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: .
-          file: 12.0.0/Dockerfile
+          context: ./12.0.0
+          file: ./12.0.0/Dockerfile
           push: true
           tags: alvisisme/cordova-android:12.0.0
