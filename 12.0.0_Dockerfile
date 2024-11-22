@@ -4,19 +4,18 @@ ENV DEBIAN_FRONTEND=noninteractive \
       TERM=xterm
 
 ## JAVA
+ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk-amd64
 RUN apt-get update && \
-    apt-get -y install openjdk-17-jdk-headless && \
+    apt-get -qq -y --no-install-recommends install openjdk-17-jdk-headless && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     java -version
-
-ENV JAVA_HOME /usr/lib/jvm/java-17-openjdk-amd64
 
 RUN apt-get -qq update && \
     apt-get -qq install -y wget curl unzip
 
 ## GRADLE
-ENV GRADLE_VERSION=8.7
+ENV GRADLE_VERSION 8.7
 ENV GRADLE_HOME /opt/gradle-${GRADLE_VERSION}
 RUN wget -q https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip \
     && unzip -q gradle-${GRADLE_VERSION}-bin.zip \
@@ -44,7 +43,8 @@ RUN mkdir android && cd android && \
     ls | grep -v latest | xargs mv -t latest
 
 RUN mkdir /root/.android && touch /root/.android/repositories.cfg && \
-    while true; do echo 'y'; sleep 2; done | sdkmanager "platform-tools" "build-tools;${ANDROID_BUILD_TOOLS_VERSION}" && \
+    while true; do echo 'y'; sleep 2; done | sdkmanager "platform-tools;35.0.2"  && \
+    while true; do echo 'y'; sleep 2; done | sdkmanager "build-tools;${ANDROID_BUILD_TOOLS_VERSION}" && \
     while true; do echo 'y'; sleep 2; done | sdkmanager "platforms;android-34"
 
 RUN chmod a+x -R $ANDROID_SDK_ROOT && \
@@ -57,7 +57,7 @@ RUN chmod a+x -R $ANDROID_SDK_ROOT && \
 
 ## Node
 ENV NODE_VERSION 18.20.4
-RUN apt-get -qq -y update &&\
+RUN apt-get update &&\
     apt-get -qq -y --no-install-recommends install \
       curl \
       wget \
@@ -70,10 +70,13 @@ RUN apt-get -qq -y update &&\
     tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 --no-same-owner &&\
     rm "node-v$NODE_VERSION-linux-x64.tar.xz" &&\
     apt-get purge -y --auto-remove xz-utils &&\
-    ln -s /usr/local/bin/node /usr/local/bin/nodejs
+    ln -s /usr/local/bin/node /usr/local/bin/nodejs && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    apt-get autoremove -y && \
+    apt-get clean
 
 ## Cordova
-ENV CORDOVA_VERSION=12.0.0
+ENV CORDOVA_VERSION 12.0.0
 RUN npm i -g --unsafe-perm cordova@${CORDOVA_VERSION} && \
     cordova -v
     
