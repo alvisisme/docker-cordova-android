@@ -43,7 +43,7 @@ RUN mkdir android && cd android && \
     ls | grep -v latest | xargs mv -t latest
 
 RUN mkdir /root/.android && touch /root/.android/repositories.cfg && \
-    while true; do echo 'y'; sleep 2; done | sdkmanager "platform-tools;35.0.2"  && \
+    while true; do echo 'y'; sleep 2; done | sdkmanager "platform-tools"  && \
     while true; do echo 'y'; sleep 2; done | sdkmanager "build-tools;${ANDROID_BUILD_TOOLS_VERSION}" && \
     while true; do echo 'y'; sleep 2; done | sdkmanager "platforms;android-34"
 
